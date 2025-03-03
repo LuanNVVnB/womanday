@@ -62,10 +62,12 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 200%; /* Doubled width for seamless circular scrolling */
+        width: calc(
+          300px * 28
+        ); /* 14 ảnh gốc + 14 ảnh lặp = 28 ảnh, mỗi ảnh 300px */
         height: 100%;
         display: flex;
-        animation: scroll-circular 30s linear infinite; /* Increased duration for more images */
+        animation: scroll-circular 42s linear infinite; /* Tăng thời gian cho 14 ảnh */
       }
 
       .image-strip img {
@@ -81,30 +83,8 @@
         }
         100% {
           transform: translateX(
-            -50%
-          ); /* Move only half the width for circular effect */
-        }
-      }
-
-      .image-strip-1 {
-        animation-delay: 0s;
-      }
-      .image-strip-2 {
-        animation-delay: 5s;
-      }
-      .image-strip-3 {
-        animation-delay: 10s;
-      }
-      .image-strip-4 {
-        animation-delay: 15s;
-      }
-
-      @keyframes scroll-left {
-        0% {
-          transform: translateX(0);
-        }
-        100% {
-          transform: translateX(-100%);
+            calc(-300px * 14)
+          ); /* Dịch chuyển đúng 14 ảnh */
         }
       }
 
@@ -296,10 +276,7 @@
 
     <!-- Background Carousel -->
     <div class="background">
-      <div class="image-strip image-strip-1"></div>
-      <div class="image-strip image-strip-2"></div>
-      <div class="image-strip image-strip-3"></div>
-      <div class="image-strip image-strip-4"></div>
+      <div class="image-strip"></div>
     </div>
     <div class="fog"></div>
 
@@ -435,16 +412,16 @@
         "./img14.jpg",
       ];
 
-      const imageStrips = document.querySelectorAll(".image-strip");
-      function addImagesToStrip(strip) {
+      const imageStrip = document.querySelector(".image-strip");
+      function addImagesToStrip() {
         const images = [...backgroundImages, ...backgroundImages];
         images.forEach((image) => {
           const imgElement = document.createElement("img");
           imgElement.src = image;
-          strip.appendChild(imgElement);
+          imageStrip.appendChild(imgElement);
         });
       }
-      imageStrips.forEach((strip) => addImagesToStrip(strip));
+      addImagesToStrip();
 
       // Gift and Flower Animation
       function createFloatingItem() {
